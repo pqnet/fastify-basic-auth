@@ -593,7 +593,7 @@ test('WWW-Authenticate Custom Header (authenticate: {realm: "example", header: "
   t.plan(8)
 
   const fastify = Fastify()
-  const authenticate = { realm: 'example', header: 'x-custom-authenticate' }
+  const authenticate = { realm: 'example', header: 'x-custom-authenticate', errorResponseCode: 499 }
   fastify.register(basicAuth, { validate, authenticate, utf8: false })
 
   function validate (username, password, _req, _res, done) {
@@ -622,7 +622,7 @@ test('WWW-Authenticate Custom Header (authenticate: {realm: "example", header: "
   t.assert.ok(res1.body)
   t.assert.strictEqual(res1.headers['x-custom-authenticate'], 'Basic realm="example"')
   t.assert.strictEqual(res1.headers['www-authenticate'], undefined)
-  t.assert.strictEqual(res1.statusCode, 401)
+  t.assert.strictEqual(res1.statusCode, 499)
 
   const res2 = await fastify.inject({
     url: '/',
@@ -641,7 +641,7 @@ test('WWW-Authenticate Custom Header (authenticate: {realm: "example", header: "
   t.plan(8)
 
   const fastify = Fastify()
-  const authenticate = { realm: 'example', header: 'x-custom-authenticate' }
+  const authenticate = { realm: 'example', header: 'x-custom-authenticate', errorResponseCode: 499 }
   fastify.register(basicAuth, { validate, authenticate, utf8: true })
 
   function validate (username, password, _req, _res, done) {
@@ -670,7 +670,7 @@ test('WWW-Authenticate Custom Header (authenticate: {realm: "example", header: "
   t.assert.ok(res1.body)
   t.assert.strictEqual(res1.headers['x-custom-authenticate'], 'Basic realm="example", charset="UTF-8"')
   t.assert.strictEqual(res1.headers['www-authenticate'], undefined)
-  t.assert.strictEqual(res1.statusCode, 401)
+  t.assert.strictEqual(res1.statusCode, 499)
 
   const res2 = await fastify.inject({
     url: '/',
