@@ -60,8 +60,6 @@ const controlRE = /[\x00-\x1F\x7F]/
 const userPassRE = /^([^:]*):(.*)$/
 
 async function fastifyBasicAuth (fastify, opts) {
-
-  
   if (typeof opts.validate !== 'function') {
     throw new Error('Basic Auth: Missing validate function')
   }
